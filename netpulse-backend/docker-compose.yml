@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: netpulse
+      POSTGRES_USER: netpulse
+      POSTGRES_PASSWORD: netpulse_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - netpulse_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U netpulse -d netpulse"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  netpulse_pgdata:
